@@ -20,28 +20,25 @@ passport.deserializeUser((id, done) => {
 
 passport.use(
     new GoogleStrategy({
-        clientID:  keys.googleClientId,
+        clientID: keys.googleClientId,
         clientSecret: keys.googleClientSecret,
         callbackURL: '/auth/google/callback',
         proxy: true
-    }, 
-    (accessToken, refreshToken, profile, done) => {
-        Users.findOne({ googleId: profile.id })
-            .then(existingUser =>{
-                if(existingUser){
-
-                    console.log('db user');
-
-                    //serializeUser()
-                    done(null, existingUser);
-                } else{
-                    new Users({ 
-                        googleId: profile.id ,
-                        Name: profile.displayName
-                    }).save()
-                    .then(user => done(null, user)); //serializeUser()
-                }
+    },
+        async (accessToken, refreshToken, profile, done) => {
+            const existingUser = await Users.findOne({ googleId: profile.id });
+            
+            if (existingUser) {
+                return done(null, existingUser);
             }
-        );
-    })
+
+
+            const user = await new Users({
+                googleId: profile.id,
+                Name: profile.displayName
+            }).save();
+
+            done(null, user); //serializeUser()
+
+        })
 ); 
