@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import Payments from './Payments';
+
 class Header extends Component {
 
     //Helper function (custom)
@@ -12,13 +14,15 @@ class Header extends Component {
             case null:
                 return; //return nothing
             case false:
-                return (
-                    <li><a href="/auth/google">Sign in with Google</a></li>
-                );
+                return <li><a href="/auth/google">Sign in with Google</a></li>;
             default:
-                return (
-                    <li><a href="/api/logout">Logout</a></li>
-                );
+                return [
+                    <li key="payment"><Payments /></li>,
+                    <li key="balance" style={{ margin: '0 10px' }} >
+                        Credits: {this.props.auth.credits}
+                    </li>,
+                    <li key="signout"><a href="/api/logout">Logout</a></li>
+                ];
         }
     }
 
@@ -27,7 +31,7 @@ class Header extends Component {
             <nav>
                 <div className="nav-wrapper row">
                     <div className="col s12">
-                        <Link to={this.props.auth    ? '/surveys' : '/'} className="brand-logo">
+                        <Link to={this.props.auth ? '/surveys' : '/'} className="brand-logo">
                             Emaily~
                         </Link>
                         <ul className="right">

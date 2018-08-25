@@ -5,7 +5,8 @@ const { Schema } = mongoose;
 const userShema = new Schema({
     googleId: String,
     Name: String,
-    // Email: String
+    credits: { type: Number, default: 0 },
+    Email: String
 });
 
 // Declare schema to MongoDB collections

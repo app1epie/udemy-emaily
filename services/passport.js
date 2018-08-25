@@ -31,8 +31,7 @@ passport.use(
             if (existingUser) {
                 return done(null, existingUser);
             }
-
-
+            
             const user = await new Users({
                 googleId: profile.id,
                 Name: profile.displayName
