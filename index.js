@@ -30,7 +30,7 @@ require('./routes/billingRoutes')(app);
 if(process.env.NODE_ENV === 'production'){
     //express will serve up production assets
     //main.js
-    app.use(express.statis('client/build'));
+    app.use(express.static('client/build'));
 
     //express will serve up index.html file if not recognized
     const path = require('path');
