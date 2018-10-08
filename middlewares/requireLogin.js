@@ -1,4 +1,3 @@
-
 //check if session is authenticated, user is login
 module.exports = (req, res, next) => {
 

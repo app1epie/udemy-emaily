@@ -4,7 +4,11 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
+
+//include in the model to initialize in mongodb
 require('./models/User');
+require('./models/Survey');
+
 require('./services/passport');
 
 mongoose.connect(keys.mongooseURI);
@@ -25,6 +29,7 @@ app.use(passport.session());
 //Routes
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveryRoutes')(app);
 
 //if running in production
 if(process.env.NODE_ENV === 'production'){
